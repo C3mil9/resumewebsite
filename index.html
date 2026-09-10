@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camilo Hernandez — Software & Security</title>
+<meta name="description" content="Camilo Hernandez — Computer Science student, Cal Poly Pomona. Java, security-minded software, and low-level systems work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #150F2E;
+    --bg-panel: #1E1747;
+    --bg-panel-2: #241C57;
+    --text: #F5F2FF;
+    --muted: #ABA2D4;
+    --muted-dim: #7C74A8;
+    --orange: #FF5F3D;
+    --teal: #35E7C7;
+    --yellow: #FFD23F;
+    --line: rgba(245,242,255,0.12);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --maxw: 1080px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(600px 400px at 85% -5%, rgba(255,95,61,0.16), transparent 60%),
+      radial-gradient(500px 350px at -5% 15%, rgba(53,231,199,0.10), transparent 60%);
+    color: var(--text);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  ::selection{ background: var(--orange); color: #150F2E; }
+
+  a{ color: inherit; }
+
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+
+  .wrap{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  @media (max-width: 640px){
+    .wrap{ padding: 0 20px; }
+  }
+
+  /* Skip link */
+  .skip-link{
+    position: absolute; left: -999px; top: 0;
+    background: var(--orange); color: #150F2E; padding: 10px 16px;
+    border-radius: 0 0 var(--radius-sm) 0; z-index: 100; font-weight: 600;
+  }
+  .skip-link:focus{ left: 0; }
+
+  :focus-visible{
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(21,15,46,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+  }
+  .nav-mark{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-mark span{ color: var(--teal); }
+  nav.nav-links{ display: flex; gap: 28px; }
+  nav.nav-links a{
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 15px;
+    transition: color 0.15s ease;
+  }
+  nav.nav-links a:hover{ color: var(--text); }
+
+  @media (max-width: 640px){
+    nav.nav-links{ gap: 16px; }
+    nav.nav-links a{ font-size: 13px; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 88px 0 96px;
+  }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; gap: 44px; }
+    .hero{ padding: 56px 0 64px; }
+  }
+
+  .eyebrow-line{
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 22px;
+  }
+  .eyebrow-dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 0 3px rgba(53,231,199,0.18);
+  }
+  .eyebrow-line span{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  h1.hero-name{
+    font-size: clamp(2.6rem, 5.4vw, 4.2rem);
+    line-height: 1.03;
+    margin: 0 0 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h1.hero-name .accent{
+    color: var(--orange);
+  }
+
+  .hero-role{
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 46ch;
+    margin: 0 0 34px;
+  }
+  .hero-role strong{ color: var(--text); font-weight: 600; }
+
+  .hero-ctas{ display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn{
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    border: 1px solid transparent;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn-primary{
+    background: var(--orange);
+    color: #1A0F08;
+  }
+  .btn-primary:hover{ background: #ff734f; }
+  .btn-ghost{
+    background: transparent;
+    border-color: var(--line);
+    color: var(--text);
+  }
+  .btn-ghost:hover{ border-color: var(--muted-dim); background: rgba(245,242,255,0.04); }
+
+  /* Terminal */
+  .terminal{
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+  }
+  .terminal-dot{ width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r{ background: #FF5F5F; }
+  .terminal-dot.y{ background: #FFD23F; }
+  .terminal-dot.g{ background: #35E7C7; }
+  .terminal-title{
+    margin-left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted-dim);
+  }
+  .terminal-body{
+    padding: 22px 20px 26px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    min-height: 220px;
+  }
+  .terminal-line{ margin: 0 0 10px; color: var(--muted); }
+  .terminal-prompt{ color: var(--teal); }
+  .terminal-out{ color: var(--text); }
+  .terminal-out .k{ color: var(--yellow); }
+  #typed-cmd::after{
+    content: '';
+    display: inline-block;
+    width: 7px; height: 15px;
+    background: var(--teal);
+    margin-left: 2px;
+    vertical-align: -2px;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce){
+    #typed-cmd::after{ animation: none; }
+  }
+
+  /* ---------- Section shell ---------- */
+  section{ padding: 84px 0; border-top: 1px solid var(--line); }
+  @media (max-width: 640px){ section{ padding: 56px 0; } }
+
+  .section-head{
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 20px; margin-bottom: 44px; flex-wrap: wrap;
+  }
+  .section-head h2{
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0;
+    font-weight: 700;
+  }
+  .section-head .count{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted-dim);
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 780px){ .about-grid{ grid-template-columns: 1fr; gap: 32px; } }
+  .about-text p{ color: var(--muted); font-size: 16.5px; max-width: 58ch; }
+  .about-text p + p{ margin-top: 14px; }
+
+  .about-facts{
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .fact{
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+  }
+  .fact .label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--teal); margin-bottom: 6px;
+  }
+  .fact .value{ font-size: 15.5px; color: var(--text); }
+  .fact .sub{ font-size: 13.5px; color: var(--muted-dim); margin-top: 2px; }
+
+  /* ---------- Projects ---------- */
+  .project{
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 28px;
+    padding: 36px 0;
+    border-top: 1px solid var(--line);
+  }
+  .project:first-of-type{ border-top: none; padding-top: 0; }
+  @media (max-width: 700px){
+    .project{ grid-template-columns: 1fr; gap: 12px; }
+  }
+  .project-index{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted-dim);
+    padding-top: 4px;
+  }
+  .project-main h3{
+    font-size: 22px; margin: 0 0 6px; font-weight: 700;
+  }
+  .project-stack{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--orange);
+    margin: 0 0 14px;
+  }
+  .project-desc{ color: var(--muted); font-size: 15.5px; max-width: 62ch; margin: 0 0 16px; }
+  .project-desc ul{ margin: 8px 0 0; padding-left: 18px; }
+  .project-desc li{ margin-bottom: 6px; }
+  .project-links{ display: flex; gap: 16px; flex-wrap: wrap; }
+  .project-links a{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--teal);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+  }
+  .project-links a:hover{ border-color: var(--teal); }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 780px){ .skills-grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px){ .skills-grid{ grid-template-columns: 1fr; } }
+
+  .skill-card{
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 22px 20px;
+    background: var(--bg-panel);
+  }
+  .skill-card h3{
+    font-size: 14px;
+    margin: 0 0 14px;
+    color: var(--yellow);
+    font-weight: 600;
+  }
+  .skill-tags{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    background: rgba(245,242,255,0.05);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  /* ---------- Education / timeline ---------- */
+  .timeline-item{
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+  }
+  .timeline-item:first-child{ border-top: none; }
+  @media (max-width: 600px){
+    .timeline-item{ grid-template-columns: 1fr; gap: 6px; }
+  }
+  .timeline-date{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted-dim);
+  }
+  .timeline-body h3{ margin: 0 0 4px; font-size: 17px; }
+  .timeline-body p{ margin: 0; color: var(--muted); font-size: 14.5px; }
+
+  /* ---------- Contact ---------- */
+  .contact-panel{
+    background: var(--bg-panel-2);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 56px 48px;
+    text-align: center;
+  }
+  @media (max-width: 640px){ .contact-panel{ padding: 40px 24px; } }
+  .contact-panel h2{
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    margin: 0 0 14px;
+  }
+  .contact-panel p{ color: var(--muted); margin: 0 0 30px; font-size: 16px; }
+  .contact-links{
+    display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+  }
+
+  footer{
+    padding: 32px 0 48px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted-dim);
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="nav-mark">camilo<span>.dev</span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow-line">
+          <span class="eyebrow-dot"></span>
+          <span class="mono">Pomona, CA · Open to internships</span>
+        </div>
+        <h1 class="hero-name">Camilo Hernandez</h1>
+        <p class="hero-role">
+          Computer Science student at Cal Poly Pomona, minoring in <strong>Cybersecurity</strong>.
+          I build software in Java and think about how to break it before someone else does.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#projects">See my projects</a>
+          <a class="btn btn-ghost" href="mailto:camiloisaachernandez7@gmail.com">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="terminal" aria-hidden="false">
+        <div class="terminal-bar">
+          <span class="terminal-dot r"></span>
+          <span class="terminal-dot y"></span>
+          <span class="terminal-dot g"></span>
+          <span class="terminal-title">camilo@portfolio: ~</span>
+        </div>
+        <div class="terminal-body">
+          <p class="terminal-line"><span class="terminal-prompt">$</span> <span id="typed-cmd" class="mono"></span></p>
+          <div id="typed-output" class="terminal-out"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-text">
+        <div class="section-head" style="margin-bottom: 20px;">
+          <h2>About</h2>
+        </div>
+        <p>
+          I'm a Computer Science student who likes understanding systems from both sides —
+          how to build them well, and how they get taken apart. That's what pulled me into
+          a cybersecurity minor alongside my CS coursework: writing software is more interesting
+          when you're also thinking about where it can fail.
+        </p>
+        <p>
+          Most of my hands-on experience so far is in Java — building a desktop application
+          from login screens down to Maven build issues — plus lower-level work in Assembly
+          and controlled security exercises in Kali Linux. I'm comfortable moving between
+          frontend interfaces and backend logic, and I like projects that force me to debug
+          something unfamiliar.
+        </p>
+      </div>
+      <div class="about-facts">
+        <div class="fact">
+          <div class="label">EDUCATION</div>
+          <div class="value">B.S. Computer Science, Cal Poly Pomona</div>
+          <div class="sub">Minor in Cybersecurity · GPA 3.2 · Aug 2024 – Present</div>
+        </div>
+        <div class="fact">
+          <div class="label">FOCUS</div>
+          <div class="value">Java development, security fundamentals, systems programming</div>
+        </div>
+        <div class="fact">
+          <div class="label">ELSEWHERE</div>
+          <div class="value">
+            <a href="https://github.com/C3mil9" target="_blank" rel="noopener">github.com/C3mil9</a><br>
+            <a href="https://www.linkedin.com/in/camilohernandez738" target="_blank" rel="noopener">linkedin.com/in/camilohernandez738</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <span class="count mono">03 selected</span>
+      </div>
+
+      <div class="project">
+        <div class="project-index mono">01</div>
+        <div class="project-main">
+          <h3>Larry June Dealership</h3>
+          <p class="project-stack">Java · JavaFX · Maven · SQL · Scene Builder</p>
+          <p class="project-desc">
+            A desktop inventory application built for a car dealership, covering the full stack
+            from interface to data.
+            <ul>
+              <li>Built login authentication, screen navigation, and manager-facing interfaces with JavaFX and FXML</li>
+              <li>Wrote controllers connecting the UI to backend logic and SQL data</li>
+              <li>Debugged Maven build issues, resource paths, and controller wiring across the project</li>
+              <li>Collaborated with a team using Git and GitHub for version control</li>
+            </ul>
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/CS3560-02-4-S26/Larry-June-Car-Dealership" target="_blank" rel="noopener">View repository →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-index mono">02</div>
+        <div class="project-main">
+          <h3>Ethical Phishing Simulator</h3>
+          <p class="project-stack">Kali Linux · Social Engineering</p>
+          <p class="project-desc">
+            A controlled phishing-email simulation built to understand attacker technique from
+            the inside, run entirely in an isolated, ethical testing environment.
+            <ul>
+              <li>Practiced constructing realistic phishing emails to study common attack patterns</li>
+              <li>Studied malware delivery risks and how phishing fits into broader social-engineering tactics</li>
+              <li>Worked within Kali Linux's toolset for controlled, ethical security testing</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-index mono">03</div>
+        <div class="project-main">
+          <h3>Assembly Snake Game</h3>
+          <p class="project-stack">Assembly · Low-level Systems</p>
+          <p class="project-desc">
+            A fully playable Snake game written in Assembly, built without the safety net of a
+            high-level language.
+            <ul>
+              <li>Programmed keyboard input, movement, collision detection, and scoring directly against registers and memory</li>
+              <li>Implemented game-over logic and loop control using conditional branching</li>
+              <li>Applied low-level I/O and memory management concepts throughout</li>
+            </ul>
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/ethanroll/CS-2640-Group-Project-Snake-Game" target="_blank" rel="noopener">View repository →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Toolkit</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Languages</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Assembly</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Frameworks &amp; Platforms</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">JavaFX</span>
+            <span class="skill-tag">FXML</span>
+            <span class="skill-tag">Maven</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Express.js</span>
+            <span class="skill-tag">Kali Linux</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Scene Builder</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">AWS</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Security</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Phishing Awareness</span>
+            <span class="skill-tag">Social Engineering</span>
+            <span class="skill-tag">Malware Fundamentals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Education</h2>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date mono">2024 — Present</div>
+        <div class="timeline-body">
+          <h3>Cal Poly Pomona</h3>
+          <p>B.S. Computer Science, Minor in Cybersecurity · GPA 3.2</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-panel">
+        <h2>Let's build something.</h2>
+        <p>Open to internships and collaborations — reach out any time.</p>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:camiloisaachernandez7@gmail.com">camiloisaachernandez7@gmail.com</a>
+          <a class="btn btn-ghost" href="tel:+16615857621">661-585-7621</a>
+          <a class="btn btn-ghost" href="https://github.com/C3mil9" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/camilohernandez738" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Built by Camilo Hernandez · © <span id="year"></span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Single orchestrated hero terminal typing sequence
+  (function(){
+    var cmdEl = document.getElementById('typed-cmd');
+    var outEl = document.getElementById('typed-output');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var command = 'whoami --skills';
+    var outputHTML =
+      '<p class="terminal-line"><span class="k">role</span>       frontend / backend, security-minded</p>' +
+      '<p class="terminal-line"><span class="k">languages</span>  Java, Python, SQL, C++, Assembly</p>' +
+      '<p class="terminal-line"><span class="k">focus</span>      secure software, systems programming</p>' +
+      '<p class="terminal-line"><span class="k">status</span>     open to internships</p>';
+
+    if (reduceMotion) {
+      cmdEl.textContent = command;
+      outEl.innerHTML = outputHTML;
+      return;
+    }
+
+    var i = 0;
+    function typeChar(){
+      if (i <= command.length){
+        cmdEl.textContent = command.slice(0, i);
+        i++;
+        setTimeout(typeChar, 45);
+      } else {
+        setTimeout(function(){
+          outEl.innerHTML = outputHTML;
+        }, 300);
+      }
+    }
+    typeChar();
+  })();
+</script>
+
+</body>
+</html>
